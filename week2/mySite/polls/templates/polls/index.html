@@ -17,9 +17,16 @@
     <h2>Popular polls</h2>
     <ul>
         {% for poll in poll_list %}
-        <li>{{poll.id}}. {{poll.title}} ({{poll.question_count}} คำถาม) - <a href="{% url 'poll_detail' poll_id=poll.id%}">Detail</a></li>
+        <li>{{poll.id}}. {{poll.title}} ({{poll.question_count}} คำถาม){% if user.is_authenticated %} - <a href="{% url 'poll_detail' poll_id=poll.id%}">Detail</a> {% endif %}</li>
         {% endfor %}
     </ul>
+    {% if user.is_authenticated %}
+    <p>
+        <a href="{% url 'logout' %}">LOGOUT</a>
+    </p>
+    {% endif %} {% if perms.polls.add_poll %}
+    <p><a href="{% url 'create_poll'%}"> CREATE NEW POLL</a></p>
+    {%endif%}
 </body>
 
 </html>

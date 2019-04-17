@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required, permission_required
 
 from polls.models import Poll, Question, Answer
 from polls.forms import PollForm
@@ -21,6 +23,8 @@ def index(request):
 
     return render(request, template_name='polls/index.html', context=context)
 
+@login_required
+@permission_required('polls.view_poll') #this one can contains more that just one
 def detail(request, poll_id):
     poll = Poll.objects.get(pk=poll_id)
 
@@ -73,3 +77,39 @@ def create(request):
 
     context = {'form': form}
     return render(request, 'polls/create.html', context=context)
+
+def my_login(request):
+    context = {}
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        #check are they match in database
+        user = authenticate(request, username=username, password = password)
+
+        if user:
+            login(request, user)
+
+            next_url = request.POST.get('next_url')
+            if next_url:
+                return redirect(next_url)
+            else:
+                return redirect('index')
+
+            return redirect('index')
+        else:
+
+            context['username'] = username
+            context['password'] = password
+            context['error'] = 'Wrong username or password!'
+
+    next_url = request.GET.get('next')
+    if next_url:
+        context['next_url'] = next_url
+
+    return render(request, template_name="polls/login.html", context=context)
+
+def my_logout(request):
+    logout(request)
+    return redirect('login')

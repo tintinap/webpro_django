@@ -1,9 +1,12 @@
 from django.contrib import admin
+from django.contrib.auth.models import Permission
 
 # Register your models here.
 from polls.models import Poll, Question, Choice
 
+admin.site.register(Permission)
 
+#====================================================================================================================================================
 class QuestionInline(admin.StackedInline): #normal Inline
     model = Question
     extra = 1 #normally Django will add 3 extra for admin in case that admin want to add something new
