@@ -1,0 +1,25 @@
+<!DOCTYPE html> {% load static %}
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>My poll Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/bootstrap/css' %}" />
+    <script src="{% static 'css/bootstrap/js' %}"></script>
+</head>
+
+<body>
+    <h1>{{ page_title }}</h1>
+    {% comment %} <img src="{% static 'images/img1.png' %}" alt=""> {% endcomment %}
+    <h2>Popular polls</h2>
+    <ul>
+        {% for poll in poll_list %}
+        <li>{{poll.id}}. {{poll.title}} ({{poll.question_count}} คำถาม) - <a href="{% url 'poll_detail' poll_id=poll.id%}">Detail</a></li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
