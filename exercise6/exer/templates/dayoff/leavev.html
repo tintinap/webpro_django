@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>leave</title>
+</head>
+
+<body>
+    <p>
+        <a href="{% url 'logout' %}">LOGOUT</a>
+    </p>
+    <h1>leave form</h1>
+    <h1>แบบฟอร์มขอลางาน</h1>
+    <form method="post" action="{% url 'leave' %}">
+
+        {% csrf_token %} {{form.as_p}}
+        <hr />
+        <!-- <h2>Question(s)</h2> -->
+
+        </table>
+        <p><input type="submit" value="ส่ง"></p>
+    </form>
+</body>
+
+</html>

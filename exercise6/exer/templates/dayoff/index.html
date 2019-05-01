@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>leave</title>
+</head>
+
+<body>
+    <p>
+        <a href="{% url 'logout' %}">LOGOUT</a>
+    </p>
+    <h1>leave list</h1>
+    <h1>รายการคำขิลางาน</h1>
+    <table border="1">
+        <tr>
+            <th>ประเภท</th>
+            <th>สาเหตุ</th>
+            <th>ตั้งแต่วันที่</th>
+            <th>ถึงวันที่</th>
+            <th>สถานะ</th>
+        </tr>
+        {% for day in dayoff %}
+        <tr>
+            <td>{{day.type}}</td>
+            <td>{{day.reason}}</td>
+            <td>{{day.date_start}}</td>
+            <td>{{day.date_end}}</td>
+            <td>{{day.status_text}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>
+        <a href="{% url 'leave' %}">กรอกใบลา</a>
+    </p>
+</body>
+
+</html>
